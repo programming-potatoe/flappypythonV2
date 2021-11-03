@@ -1,6 +1,14 @@
 import pygame
+import enum
 
 # all of my important constants
+
+# GAME CONSTANTS
+class Gamemodes(enum.Enum):
+    start_screen = 1
+    running = 2
+    lost_screen = 3
+    exit = 4
 
 # WINDOW CONSTANTS
 WIDTH, HEIGHT = 2000, 1500
@@ -11,6 +19,7 @@ LOOSE_FONT = pygame.font.SysFont("comicsans", 200)
 
 # COLORS
 RED = (255,0,0)
+GREEN = (0,255,0)
 
 # BIRD CONSTANTS
 BIRD_WIDTH, BIRD_HEIGHT = 125,125
@@ -22,8 +31,8 @@ BIRD_MAX_ROTATION_UP = 20
 # PIPE CONSTANTS
 PIPE_WIDHT = 200
 PIPE_HOLE_SIZE = 200
-PIPE_SPAWN_TIMER = 5
-PIPE_SPEED = 25
+PIPE_SPAWN_TIMER = 4
+PIPE_SPEED = 40
 PIPE_UPPER = 0
 PIPE_LOWER = 1
 

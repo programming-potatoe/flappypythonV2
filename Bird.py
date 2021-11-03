@@ -27,14 +27,14 @@ class Bird(pygame.sprite.Sprite):
         self.gravity = 0
         self.step_size = 5
         
-    def __handle_user_input(self):
+    def __handle_user_input(self, keys_pressed):
         """
         checks for the user input and adjusts gravity and step_size accordingly
-        
+
+        :param keys_pressed: array with all pressed keys
         :return: nothing
         """
         # if key is pressed negative gravity, else positive gravity
-        keys_pressed = pygame.key.get_pressed()
         if keys_pressed[pygame.K_SPACE]:
             if self.gravity >= 0:
                 self.gravity = -BIRD_INITIAL_STEP_SIZE
@@ -49,7 +49,7 @@ class Bird(pygame.sprite.Sprite):
             else:
                 self.gravity += self.step_size
                 self.step_size += 1
-      
+
     def __update_coordinates(self):
         """
         updates the coordinates of the bird using the gravity
@@ -102,12 +102,13 @@ class Bird(pygame.sprite.Sprite):
         self.image = pygame.transform.rotate(self.image, self.angle)
 
     
-    def update(self):
+    def update(self, keys_pressed):
         """
         updates all properties of the bird
         
+        :param keys_pressed: array of all keys pressed
         :return: nothing
         """
-        self.__handle_user_input()
+        self.__handle_user_input(keys_pressed)
         self.__update_coordinates()
         self.__update_image()
