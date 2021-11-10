@@ -1,10 +1,11 @@
 import pygame
 import os
+from typing import List
 
 from constants import BIRD_HEIGHT, BIRD_WIDTH, BIRD_SPAWN, GAME_LOST, HEIGHT, BIRD_INITIAL_STEP_SIZE, BIRD_MAX_ROTATION_DOWN, BIRD_MAX_ROTATION_UP
 
 class Bird(pygame.sprite.Sprite):
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         
         # image variable of the bird
@@ -27,7 +28,7 @@ class Bird(pygame.sprite.Sprite):
         self.gravity = 0
         self.step_size = 5
         
-    def __handle_user_input(self, keys_pressed):
+    def __handle_user_input(self, keys_pressed: List[int]) -> None:
         """
         checks for the user input and adjusts gravity and step_size accordingly
 
@@ -50,7 +51,7 @@ class Bird(pygame.sprite.Sprite):
                 self.gravity += self.step_size
                 self.step_size += 1
 
-    def __update_coordinates(self):
+    def __update_coordinates(self) -> None:
         """
         updates the coordinates of the bird using the gravity
         
@@ -68,7 +69,7 @@ class Bird(pygame.sprite.Sprite):
         if self.rect.y < 0:
             self.rect.y = 0
             
-    def __update_image(self):
+    def __update_image(self) -> None:
         """
         updates the image of the bird (rotation and animation)
         
@@ -102,7 +103,7 @@ class Bird(pygame.sprite.Sprite):
         self.image = pygame.transform.rotate(self.image, self.angle)
 
     
-    def update(self, keys_pressed):
+    def update(self, keys_pressed: List[int]) -> None:
         """
         updates all properties of the bird
         

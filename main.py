@@ -8,7 +8,7 @@ import Game
 
 from constants import GAME_LOST, FPS, HIGHSCORE_NEW_PONIT, PIPE_SPAWN, Gamemodes
 
-def window_close_pressed():
+def window_close_pressed() -> None:
     """
     checks if the window close button was pressed
     
@@ -24,7 +24,7 @@ def window_close_pressed():
         
     return False
 
-def main():
+def main() -> None:
     """
     main loop of the game
     
