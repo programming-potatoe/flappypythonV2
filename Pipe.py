@@ -4,7 +4,21 @@ import os
 from constants import HEIGHT, HIGHSCORE_NEW_PONIT, PIPE_WIDHT, WIDTH, PIPE_HOLE_SIZE, PIPE_SPEED, PIPE_LOWER, PIPE_UPPER
 
 class Pipe(pygame.sprite.Sprite):
+    """Class that contains the logic for pipe objects
+    
+    Attributes:
+        hole_center: y coordinate of the center between the 2 pipes
+        type: type of the pipe (upper or lower)
+        image: the image of the pipe
+        rect: the rect representation of the pipe
+    """
     def __init__(self, type: int, hole_center: int) -> None:
+        """Init function for the pipe class
+        
+        Args:
+            type: the type of the pipe (upper or lower)
+            hole_center: y coordinate of the center of the hole
+        """
         super().__init__()
         
         self.hole_center = hole_center
@@ -20,10 +34,7 @@ class Pipe(pygame.sprite.Sprite):
 
 
     def __update_coordinates(self) -> None:
-        """
-        updates the coordinates of the pipe
-        
-        :return: nothing
+        """Updates the coordinates of the pipe
         """
         self.rect.x -= PIPE_SPEED
         
@@ -32,10 +43,7 @@ class Pipe(pygame.sprite.Sprite):
             pygame.event.post(pygame.event.Event(HIGHSCORE_NEW_PONIT))
     
     def update(self) -> None:
-        """
-        updates all parameters of the pipe
-        
-        :return: nothing
+        """Updates all parameters of the pipe
         """
         self.__update_coordinates()
     

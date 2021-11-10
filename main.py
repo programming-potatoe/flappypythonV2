@@ -8,27 +8,8 @@ import Game
 
 from constants import GAME_LOST, FPS, HIGHSCORE_NEW_PONIT, PIPE_SPAWN, Gamemodes
 
-def window_close_pressed() -> None:
-    """
-    checks if the window close button was pressed
-    
-    :return: boolean, true if window close button was pressed
-    """
-    # get all events
-    events = pygame.event.get()
-
-    # check all events
-    for event in events:
-        if event.type == pygame.QUIT:
-            return True
-        
-    return False
-
 def main() -> None:
-    """
-    main loop of the game
-    
-    :return: nothing
+    """Main loop of the game
     """
     run = True
 

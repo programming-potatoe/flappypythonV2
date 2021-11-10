@@ -5,7 +5,20 @@ from typing import List
 from constants import BIRD_HEIGHT, BIRD_WIDTH, BIRD_SPAWN, GAME_LOST, HEIGHT, BIRD_INITIAL_STEP_SIZE, BIRD_MAX_ROTATION_DOWN, BIRD_MAX_ROTATION_UP
 
 class Bird(pygame.sprite.Sprite):
+    """Class that contains all player logic
+    
+    Attributes:
+        image: the image of the bird
+        angle: the current angle of the bird
+        fly: list of images that should be played when bird is flying
+        glide: image of bird gliding
+        rect: the rect representation of the bird
+        gravity: the current gravity that affects the bird
+        step_size: the current step size that the bird moves per step
+    """
     def __init__(self) -> None:
+        """Iniit function for the bird class
+        """
         super().__init__()
         
         # image variable of the bird
@@ -29,11 +42,10 @@ class Bird(pygame.sprite.Sprite):
         self.step_size = 5
         
     def __handle_user_input(self, keys_pressed: List[int]) -> None:
-        """
-        checks for the user input and adjusts gravity and step_size accordingly
-
-        :param keys_pressed: array with all pressed keys
-        :return: nothing
+        """Checks for the user input and adjusts gravity and step_size accordingly
+        
+        Args:
+            keys_pressed: list with all pressed keys
         """
         # if key is pressed negative gravity, else positive gravity
         if keys_pressed[pygame.K_SPACE]:
@@ -52,10 +64,7 @@ class Bird(pygame.sprite.Sprite):
                 self.step_size += 1
 
     def __update_coordinates(self) -> None:
-        """
-        updates the coordinates of the bird using the gravity
-        
-        :return: nothing
+        """Updates the coordinates of the bird using the gravity
         """
         # apply gravity
         self.rect.y += self.gravity
@@ -70,10 +79,7 @@ class Bird(pygame.sprite.Sprite):
             self.rect.y = 0
             
     def __update_image(self) -> None:
-        """
-        updates the image of the bird (rotation and animation)
-        
-        :return: nothing
+        """Updates the image of the bird (rotation and animation)
         """
         if self.gravity > 0:
             # bird is going down => only gliding and rotation downwards
@@ -102,13 +108,11 @@ class Bird(pygame.sprite.Sprite):
         # rotate the image
         self.image = pygame.transform.rotate(self.image, self.angle)
 
-    
     def update(self, keys_pressed: List[int]) -> None:
-        """
-        updates all properties of the bird
+        """Updates all properties of the bird
         
-        :param keys_pressed: array of all keys pressed
-        :return: nothing
+        Args:
+            keys_pressed: array of all keys pressed
         """
         self.__handle_user_input(keys_pressed)
         self.__update_coordinates()

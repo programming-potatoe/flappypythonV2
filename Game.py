@@ -11,7 +11,18 @@ import Bird
 from constants import CAPTION, FPS, GAME_LOST, GREEN, HIGHSCORE_NEW_PONIT, WIDTH, HEIGHT, HIGHSCORE_FONT, RED, LOOSE_FONT, BIRD_HEIGHT, PIPE_LOWER, PIPE_UPPER, PIPE_SPAWN, PIPE_SPAWN_TIMER, Gamemodes
 
 class Game:
+    """The class that contains all game logic
+    
+    Attributes:
+        win: the pygame win object of the game
+        BACKGROUND: the image of the background
+        highscore: the current highscore of the game
+        clock: the pygame clock object
+        gamemode: the current gamemode of the game
+    """
     def __init__(self) -> None:
+        """Init function of the game class
+        """
         self.win = self.__init_window()
         self.BACKGROUND = pygame.transform.scale(pygame.image.load(os.path.join("assets", "background", "background.png")), (WIDTH, HEIGHT))
         self.highscore = 0
@@ -20,17 +31,19 @@ class Game:
 
 
     def __init_window(self) -> pygame.Surface:
-        """
-        Initializes the window for the game
-    
-        :return: the surface object
+        """Initializes the window for the game
+        
+        Returns:
+            the surface object
         """
         pygame.display.set_caption(CAPTION)
         win = pygame.display.set_mode((WIDTH, HEIGHT))
     
         return win
     
-    def start_game(self) -> None:
+    def __start_game(self) -> None:
+        """Sets up the game objects
+        """
         self.highscore = 0
         
         # set up pipe sprite group and add first pipe
@@ -46,7 +59,9 @@ class Game:
         self.player = pygame.sprite.GroupSingle()
         self.player.add(Bird.Bird())
         
-    def stop_game(self) -> None:
+    def __stop_game(self) -> None:
+        """Removes all game objects and timers
+        """
         # delete objects
         self.pipes = []
         self.player = []
@@ -56,20 +71,13 @@ class Game:
 
         
     def __draw_background(self) -> None:
-        """
-        draws the background
-        
-        :return: nothing
+        """Draws the background
         """
         self.win.blit(self.BACKGROUND, (0,0))
 
     
     def __draw_window(self) -> None:
-        """
-        draws the basic window
-
-        :param highscore: the current highscore    
-        :return: nothing
+        """Draws the basic window
         """
         # draw background
         self.__draw_background()
@@ -77,13 +85,18 @@ class Game:
         # draw highscore
         highscore_text = HIGHSCORE_FONT.render("Highscore: " + str(round(self.highscore)), 1, RED)
         self.win.blit(highscore_text, ((10,10)))
-        
 
-    def draw_start_screen(self) -> None:
+    def __draw_game(self) -> None:
+        """Draws all game entities
         """
-        draws the start screen
-        
-        :return: nothing
+        self.__draw_window()
+        self.pipes.draw(self.win)
+        self.player.draw(self.win)
+        pygame.display.update()
+  
+
+    def __draw_startscreen(self) -> None:
+        """Draws the startscreen
         """
         self.__draw_background()
         line1 = LOOSE_FONT.render("Welcome to FlappyPython V2", 1, GREEN)
@@ -92,11 +105,8 @@ class Game:
         self.win.blit(line2, (round((WIDTH/2) - line2.get_width()/2), round(HEIGHT/2 - line1.get_height()/2) + line1.get_height() + 5))        
         pygame.display.update()
 
-    def draw_lost(self) -> None:
-        """
-        draws the "you lost" screen for 3 seconds
-        
-        :return: nothing
+    def __draw_lostscreen(self) -> None:
+        """Draws the "you lost" screen for 3 seconds
         """
         self.__draw_background()
         line1 = LOOSE_FONT.render("You loose!! Highscore: " + str(round(self.highscore)), 1, RED)
@@ -105,47 +115,51 @@ class Game:
         self.win.blit(line2, (round((WIDTH/2) - line2.get_width()/2), round(HEIGHT/2 - line1.get_height()/2) + line1.get_height() + 5))        
         pygame.display.update()
         
-    def spawn_pipe(self) -> None:
-        """
-        adds another pipe
-        
-        :return: nothing
+    def __spawn_pipe(self) -> None:
+        """Adds another pipe to the pipe list
         """
         hole_center = random.randrange(0 + BIRD_HEIGHT, HEIGHT - BIRD_HEIGHT)
         self.pipes.add(Pipe.Pipe(PIPE_LOWER, hole_center))
         self.pipes.add(Pipe.Pipe(PIPE_UPPER, hole_center))
         
-    def collision_sprite(self) -> None:
-        """
-        checks if the sprites collide
+    def __collision_sprite(self) -> bool:
+        """Checks if the sprites of player bird and pipes collide
         
-        :return: Boolean if sprites collide or not
+        Returns:
+            if player and pipes collide or not
         """
         if pygame.sprite.spritecollide(self.player.sprite,self.pipes,False):
             return True
         else: 
             return False
         
-    def handle_ingame_events(self, events: List[pygame.event.Event]) -> None:
-        """
-        handles all events that happen in game
+    def __handle_ingame_events(self, events: List[pygame.event.Event]) -> None:
+        """Handles all events that happen in game
         
-        :param events: list of all events
-        :return: nothing
+        Args:
+            events: list of all events
         """
         for event in events:
             if event.type == HIGHSCORE_NEW_PONIT:
                 self.highscore += 0.5
             if event.type == PIPE_SPAWN:
-                self.spawn_pipe()
+                self.__spawn_pipe()
+
+    def __update(self, keys_pressed: List[int]) -> None:
+        """Updates all game entities
+        
+        Args:
+            keys_pressed: arrays of pressed keys
+       """
+        self.player.update(keys_pressed)
+        self.pipes.update()
     
     def set_gamemode(self, events: List[pygame.event.Event], keys_pressed: List[int]) -> None:
-        """
-        sets gamemode based on events and pressed keys
+        """Sets gamemode based on events and pressed keys
         
-        :param events: list of all events
-        :param keys_pressed: list of all pressed keys
-        :return: nothing
+        Args:
+            events: list of all events
+            keys_pressed: list of all pressed keys
         """        
         for event in events:
             if event.type == pygame.QUIT:
@@ -160,27 +174,15 @@ class Game:
         elif keys_pressed[K_RETURN] and self.gamemode in [Gamemodes.startscreen, Gamemodes.lostscreen]:
             self.gamemode = Gamemodes.running
 
-
-    
     def gamemode_startscreen(self) -> None:
-        """does stuff for the startscreen
-        
-        Args:
-            self: this object
-        
-        Returns:
-            nothing
+        """Does stuff for the startscreen
         """
-        self.draw_start_screen()
+        self.__draw_startscreen()
     
     def gamemode_running(self) -> None:
+        """Executes the gamemode running
         """
-        test_function does blah blah blah
-        
-        :param p1: describe about parameter p1
-        :return: describe what it returns
-        """
-        self.start_game() 
+        self.__start_game() 
                         
         while self.gamemode == Gamemodes.running:
 
@@ -193,55 +195,31 @@ class Game:
             keys_pressed = pygame.key.get_pressed()
 
             # handle ingame events
-            self.handle_ingame_events(events)
+            self.__handle_ingame_events(events)
 
             # set gamemode based on events
             self.set_gamemode(events, keys_pressed)
 
             # react to gamestop
             if self.gamemode != Gamemodes.running:
-                self.stop_game()
+                self.__stop_game()
                 break                
 
             # update all things
-            self.update(keys_pressed)
+            self.__update(keys_pressed)
 
             # draw game
-            self.draw_game()
+            self.__draw_game()
                         
             # check for collisions
-            if self.collision_sprite():
+            if self.__collision_sprite():
                 self.gamemode = Gamemodes.lostscreen
 
             if self.gamemode != Gamemodes.running:
-                self.stop_game()
+                self.__stop_game()
                 break
     
     def gamemode_lostscreen(self) -> None:
+        """Executes the gamemode lostscreen
         """
-        test_function does blah blah blah
-        
-        :return: nothing
-        """
-        self.draw_lost()
-        
-    def update(self, keys_pressed: List[int]) -> None:
-        """
-        updates all game entities
-        
-        :param keys_pressed: arrays of pressed keys
-        :return: nothing
-        """
-        self.player.update(keys_pressed)
-        self.pipes.update()
-        
-    def draw_game(self) -> None:
-        """
-        draws all game entities
-        
-        :return: nothing
-        """
-        self.__draw_window()
-        self.pipes.draw(self.win)
-        self.player.draw(self.win)
-        pygame.display.update()
+        self.__draw_lostscreen()
