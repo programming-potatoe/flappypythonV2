@@ -7,17 +7,17 @@ class Pipe(pygame.sprite.Sprite):
     """Class that contains the logic for pipe objects
     
     Attributes:
-        hole_center: y coordinate of the center between the 2 pipes
-        type: type of the pipe (upper or lower)
-        image: the image of the pipe
-        rect: the rect representation of the pipe
+        hole_center: Y coordinate of the center between the 2 pipes
+        type: Type of the pipe (upper or lower)
+        image: The image of the pipe
+        rect: The rect representation of the pipe
     """
     def __init__(self, type: int, hole_center: int) -> None:
         """Init function for the pipe class
         
         Args:
-            type: the type of the pipe (upper or lower)
-            hole_center: y coordinate of the center of the hole
+            type: The type of the pipe (upper or lower)
+            hole_center: Y coordinate of the center of the hole
         """
         super().__init__()
         

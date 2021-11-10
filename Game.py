@@ -14,14 +14,14 @@ class Game:
     """The class that contains all game logic
     
     Attributes:
-        win: the pygame win object of the game
-        BACKGROUND: the image of the background
-        highscore: the current highscore of the game
-        clock: the pygame clock object
-        gamemode: the current gamemode of the game
+        win: The pygame win object of the game
+        BACKGROUND: The image of the background
+        highscore: The current highscore of the game
+        clock: The pygame clock object
+        gamemode: The current gamemode of the game
     """
     def __init__(self) -> None:
-        """Init function of the game class
+        """Init function of the Game class
         """
         self.win = self.__init_window()
         self.BACKGROUND = pygame.transform.scale(pygame.image.load(os.path.join("assets", "background", "background.png")), (WIDTH, HEIGHT))
@@ -29,12 +29,11 @@ class Game:
         self.gamemode = Gamemodes.startscreen
         self.clock = pygame.time.Clock()
 
-
     def __init_window(self) -> pygame.Surface:
         """Initializes the window for the game
         
         Returns:
-            the surface object
+            The surface object
         """
         pygame.display.set_caption(CAPTION)
         win = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -126,7 +125,7 @@ class Game:
         """Checks if the sprites of player bird and pipes collide
         
         Returns:
-            if player and pipes collide or not
+            If player and pipes collide or not
         """
         if pygame.sprite.spritecollide(self.player.sprite,self.pipes,False):
             return True
@@ -137,7 +136,7 @@ class Game:
         """Handles all events that happen in game
         
         Args:
-            events: list of all events
+            events: List of all events
         """
         for event in events:
             if event.type == HIGHSCORE_NEW_PONIT:
@@ -158,8 +157,8 @@ class Game:
         """Sets gamemode based on events and pressed keys
         
         Args:
-            events: list of all events
-            keys_pressed: list of all pressed keys
+            events: List of all events
+            keys_pressed: List of all pressed keys
         """        
         for event in events:
             if event.type == pygame.QUIT:

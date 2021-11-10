@@ -8,16 +8,16 @@ class Bird(pygame.sprite.Sprite):
     """Class that contains all player logic
     
     Attributes:
-        image: the image of the bird
-        angle: the current angle of the bird
-        fly: list of images that should be played when bird is flying
-        glide: image of bird gliding
-        rect: the rect representation of the bird
-        gravity: the current gravity that affects the bird
-        step_size: the current step size that the bird moves per step
+        image: The image of the bird
+        angle: The current angle of the bird
+        fly: List of images that should be played when bird is flying
+        glide: Image of bird gliding
+        rect: The rect representation of the bird
+        gravity: The current gravity that affects the bird
+        step_size: The current step size that the bird moves per step
     """
     def __init__(self) -> None:
-        """Iniit function for the bird class
+        """Init function for the bird class
         """
         super().__init__()
         
@@ -45,7 +45,7 @@ class Bird(pygame.sprite.Sprite):
         """Checks for the user input and adjusts gravity and step_size accordingly
         
         Args:
-            keys_pressed: list with all pressed keys
+            keys_pressed: List with all pressed keys
         """
         # if key is pressed negative gravity, else positive gravity
         if keys_pressed[pygame.K_SPACE]:
