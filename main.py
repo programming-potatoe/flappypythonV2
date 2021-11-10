@@ -1,12 +1,11 @@
 import pygame
-from pygame.constants import K_ESCAPE, K_RETURN
 pygame.font.init()
 pygame.mixer.init()
 pygame.init()
 
 import Game
 
-from constants import GAME_LOST, FPS, HIGHSCORE_NEW_PONIT, PIPE_SPAWN, Gamemodes
+from constants import Gamemodes
 
 def main() -> None:
     """Main loop of the game

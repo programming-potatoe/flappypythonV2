@@ -1,7 +1,7 @@
 import pygame
 import os
 
-from constants import HEIGHT, HIGHSCORE_NEW_PONIT, PIPE_WIDHT, WIDTH, PIPE_HOLE_SIZE, PIPE_SPEED, PIPE_LOWER, PIPE_UPPER
+from constants import HEIGHT, HIGHSCORE_NEW_PONIT, PIPE_WIDHT, WIDTH, PIPE_HOLE_SIZE, PIPE_SPEED, PIPE_UPPER
 
 class Pipe(pygame.sprite.Sprite):
     """Class that contains the logic for pipe objects
