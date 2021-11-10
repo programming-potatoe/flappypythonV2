@@ -1,0 +1,458 @@
+pygame 2.0.1 (SDL 2.0.14, Python 3.8.10)
+Hello from the pygame community. https://www.pygame.org/contribute.html
+---
+description: |
+    API documentation for modules: flappypythonV2, flappypythonV2.Bird, flappypythonV2.Game, flappypythonV2.Pipe, flappypythonV2.constants, flappypythonV2.main.
+
+lang: en
+
+classoption: oneside
+geometry: margin=1in
+papersize: a4
+
+linkcolor: blue
+links-as-notes: true
+...
+
+
+    
+# Namespace `flappypythonV2` {#id}
+
+
+
+
+    
+## Sub-modules
+
+* [flappypythonV2.Bird](#flappypythonV2.Bird)
+* [flappypythonV2.Game](#flappypythonV2.Game)
+* [flappypythonV2.Pipe](#flappypythonV2.Pipe)
+* [flappypythonV2.constants](#flappypythonV2.constants)
+* [flappypythonV2.main](#flappypythonV2.main)
+
+
+
+
+
+
+    
+# Module `flappypythonV2.Bird` {#id}
+
+
+
+
+
+
+
+    
+## Classes
+
+
+    
+### Class `Bird` {#id}
+
+
+
+
+>     class Bird
+
+
+Class that contains all player logic
+
+
+Attributes
+-----=
+**```image```**
+:   The image of the bird
+
+
+**```angle```**
+:   The current angle of the bird
+
+
+**```fly```**
+:   List of images that should be played when bird is flying
+
+
+**```glide```**
+:   Image of bird gliding
+
+
+**```rect```**
+:   The rect representation of the bird
+
+
+**```gravity```**
+:   The current gravity that affects the bird
+
+
+**```step_size```**
+:   The current step size that the bird moves per step
+
+
+Init function for the bird class
+
+
+    
+#### Ancestors (in MRO)
+
+* [pygame.sprite.Sprite](#pygame.sprite.Sprite)
+
+
+
+
+
+
+    
+#### Methods
+
+
+    
+##### Method `update` {#id}
+
+
+
+
+>     def update(
+>         self,
+>         keys_pressed: List[int]
+>     ) ‑> None
+
+
+Updates all properties of the bird
+
+
+Args
+-----=
+**```keys_pressed```**
+:   array of all keys pressed
+
+
+
+
+
+    
+# Module `flappypythonV2.Game` {#id}
+
+
+
+
+
+
+
+    
+## Classes
+
+
+    
+### Class `Game` {#id}
+
+
+
+
+>     class Game
+
+
+The class that contains all game logic
+
+
+Attributes
+-----=
+**```win```**
+:   The pygame win object of the game
+
+
+**```BACKGROUND```**
+:   The image of the background
+
+
+**```highscore```**
+:   The current highscore of the game
+
+
+**```clock```**
+:   The pygame clock object
+
+
+**```gamemode```**
+:   The current gamemode of the game
+
+
+Init function of the Game class
+
+
+
+
+
+
+
+    
+#### Methods
+
+
+    
+##### Method `gamemode_lostscreen` {#id}
+
+
+
+
+>     def gamemode_lostscreen(
+>         self
+>     ) ‑> None
+
+
+Executes the gamemode lostscreen
+
+    
+##### Method `gamemode_running` {#id}
+
+
+
+
+>     def gamemode_running(
+>         self
+>     ) ‑> None
+
+
+Executes the gamemode running
+
+    
+##### Method `gamemode_startscreen` {#id}
+
+
+
+
+>     def gamemode_startscreen(
+>         self
+>     ) ‑> None
+
+
+Does stuff for the startscreen
+
+    
+##### Method `set_gamemode` {#id}
+
+
+
+
+>     def set_gamemode(
+>         self,
+>         events: List[<built-in function Event>],
+>         keys_pressed: List[int]
+>     ) ‑> None
+
+
+Sets gamemode based on events and pressed keys
+
+
+Args
+-----=
+**```events```**
+:   List of all events
+
+
+**```keys_pressed```**
+:   List of all pressed keys
+
+
+
+
+
+    
+# Module `flappypythonV2.Pipe` {#id}
+
+
+
+
+
+
+
+    
+## Classes
+
+
+    
+### Class `Pipe` {#id}
+
+
+
+
+>     class Pipe(
+>         type: int,
+>         hole_center: int
+>     )
+
+
+Class that contains the logic for pipe objects
+
+
+Attributes
+-----=
+**```hole_center```**
+:   Y coordinate of the center between the 2 pipes
+
+
+**```type```**
+:   Type of the pipe (upper or lower)
+
+
+**```image```**
+:   The image of the pipe
+
+
+**```rect```**
+:   The rect representation of the pipe
+
+
+Init function for the pipe class
+
+
+Args
+-----=
+**```type```**
+:   The type of the pipe (upper or lower)
+
+
+**```hole_center```**
+:   Y coordinate of the center of the hole
+
+
+
+
+    
+#### Ancestors (in MRO)
+
+* [pygame.sprite.Sprite](#pygame.sprite.Sprite)
+
+
+
+
+
+
+    
+#### Methods
+
+
+    
+##### Method `update` {#id}
+
+
+
+
+>     def update(
+>         self
+>     ) ‑> None
+
+
+Updates all parameters of the pipe
+
+
+
+    
+# Module `flappypythonV2.constants` {#id}
+
+
+
+
+
+
+
+    
+## Classes
+
+
+    
+### Class `Gamemodes` {#id}
+
+
+
+
+>     class Gamemodes(
+>         value,
+>         names=None,
+>         *,
+>         module=None,
+>         qualname=None,
+>         type=None,
+>         start=1
+>     )
+
+
+An enumeration.
+
+
+    
+#### Ancestors (in MRO)
+
+* [enum.Enum](#enum.Enum)
+
+
+
+    
+#### Class variables
+
+
+    
+##### Variable `exit` {#id}
+
+
+
+
+
+
+    
+##### Variable `lostscreen` {#id}
+
+
+
+
+
+
+    
+##### Variable `running` {#id}
+
+
+
+
+
+
+    
+##### Variable `startscreen` {#id}
+
+
+
+
+
+
+
+
+
+
+
+    
+# Module `flappypythonV2.main` {#id}
+
+
+
+
+
+
+    
+## Functions
+
+
+    
+### Function `main` {#id}
+
+
+
+
+>     def main() ‑> None
+
+
+Main loop of the game
+
+
+
+-----
+Generated by *pdoc* 0.10.0 (<https://pdoc3.github.io>).
