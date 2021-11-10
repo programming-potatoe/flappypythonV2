@@ -1,4 +1,3 @@
-import random
 import pygame
 from pygame.constants import K_ESCAPE, K_RETURN
 pygame.font.init()
@@ -9,6 +8,21 @@ import Game
 
 from constants import GAME_LOST, FPS, HIGHSCORE_NEW_PONIT, PIPE_SPAWN, Gamemodes
 
+def window_close_pressed():
+    """
+    checks if the window close button was pressed
+    
+    :return: boolean, true if window close button was pressed
+    """
+    # get all events
+    events = pygame.event.get()
+
+    # check all events
+    for event in events:
+        if event.type == pygame.QUIT:
+            return True
+        
+    return False
 
 def main():
     """
@@ -26,6 +40,7 @@ def main():
     # create the game class
     game = Game.Game()
 
+    # main game loop
     while run:
         
         # get all pressed keys
@@ -41,13 +56,20 @@ def main():
         # execute the different gamemodes
         if gamemode == Gamemodes.start_screen:
             game.draw_start_screen()
+
+            # get all events
+            events = pygame.event.get()
+
+            # check all events
+            for event in events:
+                if event.type == pygame.QUIT:
+                    gamemode = Gamemodes.exit
         
         elif gamemode == Gamemodes.running:
             game.start_game() 
                                     
             while gamemode == Gamemodes.running:
                 clock.tick(FPS)
-
                 
                 # get all events
                 events = pygame.event.get()
@@ -88,12 +110,17 @@ def main():
                 
         elif gamemode == Gamemodes.lost_screen:
             game.draw_lost()
+            
+            
 
+        elif gamemode == Gamemodes.exit:
+            run = False
+            pygame.quit()
+        
         else:
             run = False
             pygame.quit()
     
-
 # run main only if this file is run directly
 if __name__ == "__main__":
     main()

@@ -81,7 +81,7 @@ class Game:
         :return: nothing
         """
         self.__draw_background()
-        line1 = LOOSE_FONT.render("Welcome to flappypython V2", 1, GREEN)
+        line1 = LOOSE_FONT.render("Welcome to FlappyPython V2", 1, GREEN)
         line2 = LOOSE_FONT.render("Press enter to play", 1, GREEN)
         self.win.blit(line1, (round((WIDTH/2) - line1.get_width()/2), round(HEIGHT/2 - line1.get_height()/2)))
         self.win.blit(line2, (round((WIDTH/2) - line2.get_width()/2), round(HEIGHT/2 - line1.get_height()/2) + line1.get_height() + 5))        
