@@ -5,9 +5,9 @@ import enum
 
 # GAME CONSTANTS
 class Gamemodes(enum.Enum):
-    start_screen = 1
+    startscreen = 1
     running = 2
-    lost_screen = 3
+    lostscreen = 3
     exit = 4
 
 # WINDOW CONSTANTS

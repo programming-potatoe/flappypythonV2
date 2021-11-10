@@ -2,16 +2,20 @@ import pygame
 import os
 import random
 
+from pygame.constants import K_ESCAPE, K_RETURN
+
 import Pipe
 import Bird
 
-from constants import CAPTION, GREEN, WIDTH, HEIGHT, HIGHSCORE_FONT, RED, LOOSE_FONT, BIRD_HEIGHT, PIPE_LOWER, PIPE_UPPER, PIPE_SPAWN, PIPE_SPAWN_TIMER
+from constants import CAPTION, FPS, GAME_LOST, GREEN, HIGHSCORE_NEW_PONIT, WIDTH, HEIGHT, HIGHSCORE_FONT, RED, LOOSE_FONT, BIRD_HEIGHT, PIPE_LOWER, PIPE_UPPER, PIPE_SPAWN, PIPE_SPAWN_TIMER, Gamemodes
 
 class Game:
     def __init__(self):
         self.win = self.__init_window()
         self.BACKGROUND = pygame.transform.scale(pygame.image.load(os.path.join("assets", "background", "background.png")), (WIDTH, HEIGHT))
         self.highscore = 0
+        self.gamemode = Gamemodes.startscreen
+        self.clock = pygame.time.Clock()
 
 
     def __init_window(self):
@@ -120,6 +124,106 @@ class Game:
             return True
         else: 
             return False
+        
+    def handle_ingame_events(self, events):
+        """
+        handles all events that happen in game
+        
+        :param events: list of all events
+        :return: nothing
+        """
+        for event in events:
+            if event.type == HIGHSCORE_NEW_PONIT:
+                self.highscore += 0.5
+            if event.type == PIPE_SPAWN:
+                self.spawn_pipe()
+    
+    def set_gamemode(self, events, keys_pressed):
+        """
+        sets gamemode based on events and pressed keys
+        
+        :param events: list of all events
+        :param keys_pressed: list of all pressed keys
+        :return: nothing
+        """        
+        for event in events:
+            if event.type == pygame.QUIT:
+                self.gamemode = Gamemodes.exit
+            if event.type == GAME_LOST:
+                self.gamemode = Gamemodes.lostscreen
+            if event.type == pygame.KEYDOWN and event.key == K_ESCAPE:
+                self.gamemode = Gamemodes.exit
+        
+        
+        if keys_pressed[K_ESCAPE]:
+            self.gamemode = Gamemodes.exit
+        elif keys_pressed[K_RETURN] and self.gamemode in [Gamemodes.startscreen, Gamemodes.lostscreen]:
+            self.gamemode = Gamemodes.running
+
+
+    
+    def gamemode_startscreen(self):
+        """does stuff for the startscreen
+        
+        Args:
+            self: this object
+        
+        Returns:
+            nothing
+        """
+        self.draw_start_screen()
+    
+    def gamemode_running(self):
+        """
+        test_function does blah blah blah
+        
+        :param p1: describe about parameter p1
+        :return: describe what it returns
+        """
+        self.start_game() 
+                        
+        while self.gamemode == Gamemodes.running:
+
+            self.clock.tick(FPS)
+
+            # get all events
+            events = pygame.event.get()
+
+            # get all keys pressend
+            keys_pressed = pygame.key.get_pressed()
+
+            # handle ingame events
+            self.handle_ingame_events(events)
+
+            # set gamemode based on events
+            self.set_gamemode(events, keys_pressed)
+
+            # react to gamestop
+            if self.gamemode != Gamemodes.running:
+                self.stop_game()
+                break                
+
+            # update all things
+            self.update(keys_pressed)
+
+            # draw game
+            self.draw_game()
+                        
+            # check for collisions
+            if self.collision_sprite():
+                self.gamemode = Gamemodes.lostscreen
+
+            if self.gamemode != Gamemodes.running:
+                self.stop_game()
+                break
+    
+    def gamemode_lostscreen(self):
+        """
+        test_function does blah blah blah
+        
+        :return: nothing
+        """
+        self.draw_lost()
         
     def update(self, keys_pressed):
         """
